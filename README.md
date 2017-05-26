@@ -26,6 +26,7 @@ git clone https://github.com/hidden4ever/playground-application.git playgroundAp
 * Launch the application
 ```
 cd playgroundApp
+pip install -r requirements.txt 
 python3 manage.py runserver
 ```
 **You are good to go!!**
