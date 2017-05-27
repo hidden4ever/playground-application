@@ -9,6 +9,8 @@ Core Django Application for the playground application
 ```
  which python3 pip3
 ```
+* Install mysql client : https://dev.mysql.com/doc/refman/5.6/en/osx-installation-pkg.html
+
 * Set up virtualenvs and activate it
 ```
 mkdir .virtualenvs
