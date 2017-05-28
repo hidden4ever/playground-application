@@ -32,8 +32,17 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    #application files
+    'authenticatedAPI',
+    'playgroundCore',
+
+    # Vendor APPS
     'oauth2_provider',
     'corsheaders',
+    'django_nose',
+    'rest_framework',
+
+    #default django files
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,8 +58,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+   
     # Used by Django oauth
     'corsheaders.middleware.CorsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 
@@ -59,10 +70,13 @@ ROOT_URLCONF = 'playgroundApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(os.path.dirname(__file__), 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -71,6 +85,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'playgroundApp.wsgi.application'
 
@@ -112,6 +128,41 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'oauth2_provider.backends.OAuth2Backend',
+    # Uncomment following if you want to access the admin
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly', 
+    
+    ]
+}
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+TEST_OAUTH2_CONFIG = {
+    "client_id" : "SxKfFznvi2PdgevvBwwtY6vK8iSZu7qTB0N4lmqT",
+    "client_secret":"D8NvIN5HExO1H4e9HgAD1Es4wcj1Wkpn6fu3Nuwb0fYaQxu4N5INoAEytpj0BZoD0fEF0dRfbrlK6r90PgyBufSpkd9YSaFhUhkuwugFZ1JgH2Zfgys5zu7gVU0GDGeI"
+
+}
+    
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=authenticatedAPI',
+    '--cover-html'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

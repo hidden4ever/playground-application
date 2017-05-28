@@ -14,9 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url,include
-from django.contrib import admin	
+from django.contrib import admin,auth	
+
+
 
 urlpatterns = [
+    #App routes
+    url(r"^api/", include('authenticatedAPI.urls', namespace='oauth2_provider')),
+    url(r"^", include('playgroundCore.urls', namespace='playgroundCore',app_name='playgroundCore')),
+    
+
+    url(r"^api-auth/", include('rest_framework.urls', namespace='rest_framework')),
+    # Default django views
     url(r"^admin/", admin.site.urls),
-    url(r"^o/", include('oauth2_provider.urls', namespace='oauth2_provider'))
+
+
 ]
